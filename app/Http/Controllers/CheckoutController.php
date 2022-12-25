@@ -173,13 +173,18 @@ class CheckoutController extends Controller
         }else{
             $temp_user_id = $request->session()->get('temp_user_id');// purchase without login
             $carts = ($temp_user_id != null) ? Cart::where('temp_user_id', $temp_user_id)->get() : [] ;
-           // $addressess= Address::where($temp_user_id,'user_id')->get();
-            dd($temp_user_id);
+            $session_id= Address::orderBy('id', 'DESC')->first();
+            if($session_id){
+                $address= Address::where('session_id', $temp_user_id)->first();
+            }
+            
+            
+           // dd($addressess);
         }
        // if (Session::has('cart') && count(Session::get('cart')) > 0) {}
         if ($carts && count($carts) > 0) {
             $categories = Category::all();
-            return view('frontend.shipping_info', compact('categories', 'carts'));
+            return view('frontend.shipping_info', compact('categories', 'carts','address'));
         }
         flash(translate('Your cart is empty'))->success();
         return back();

@@ -44,9 +44,11 @@ class AddressController extends Controller
         }
         else if(Auth::check()){
             $address->user_id   = Auth::user()->id;
-        }else{
+        }else{    
             $address->user_id  = $request->session()->get('temp_user_id'); //purchase without login
+            $address->session_id  = $request->session()->get('temp_user_id');
         }
+
         $address->address       = $request->address;
         $address->country_id    = $request->country_id;
         $address->state_id      = $request->state_id;

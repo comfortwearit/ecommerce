@@ -45,6 +45,10 @@
 
 <section class="mb-4 gry-bg">
     <div class="container">
+        {{-- @foreach ($addresses as $address)
+            {{$address->address}}
+        @endforeach --}}
+         
         <div class="row cols-xs-space cols-sm-space cols-md-space">
             <div class="col-xxl-8 col-xl-10 mx-auto">
                 <form class="form-default" data-toggle="validator" action="{{ route('checkout.store_shipping_infostore') }}" role="form" method="POST">
@@ -101,8 +105,8 @@
                                         </div>
                                     </div>
                                 @endforeach 
-                                {{-- @else --}}
-                                {{-- @foreach (Auth::user()->addresses as $key => $address)
+                                @else
+                              
                                 <div class="col-md-6 mb-3">
                                     <label class="aiz-megabox d-block bg-white mb-0">
                                         <input type="radio" name="address_id" value="{{ $address->id }}" @if ($address->set_default)
@@ -149,7 +153,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @endforeach  --}}
+                              
                                 @endif
                                 <input type="hidden" name="checkout_type" value="logged">
                                 <div class="col-md-6 mx-auto mb-3" >
