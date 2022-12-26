@@ -98,9 +98,9 @@ Route::post('/cart/updateQuantity', 'CartController@updateQuantity')->name('cart
 
 //Checkout Routes
 //Route::group(['prefix' => 'checkout', 'middleware' => ['user', 'verified', 'unbanned']], function() {
-Route::group(['prefix' => 'checkout'], function() {
+Route::group(['prefix' => 'checkout','middleware' => ['unbanned']], function() {
     Route::get('/', 'CheckoutController@get_shipping_info')->name('checkout.shipping_info');
-    Route::any('/delivery_info', 'CheckoutController@store_shipping_info')->name('checkout.store_shipping_infostore');
+    Route::any('/delivery_info', 'CheckoutController@store_shipping_info')->name('checkout.store_shipping_infostore'); 
     Route::post('/payment_select', 'CheckoutController@store_delivery_info')->name('checkout.store_delivery_info');
 
     Route::get('/order-confirmed', 'CheckoutController@order_confirmed')->name('order_confirmed');

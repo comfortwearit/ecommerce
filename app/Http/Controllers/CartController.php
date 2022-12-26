@@ -14,7 +14,7 @@ class CartController extends Controller
 {
     public function index(Request $request)
     {
-        //dd($cart->all());
+        //dd($cart->all()); 
         $categories = Category::all();
         if(auth()->user() != null) {
             $user_id = Auth::user()->id;

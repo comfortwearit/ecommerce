@@ -11,6 +11,16 @@
                 @csrf
                 <div class="modal-body">
                     <div class="p-3">
+                        @if(!Auth::check())
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>{{ translate('Name')}}</label>
+                                </div>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control mb-3" placeholder="{{ translate('Your Name')}}" name="name" value="" required>
+                                </div>
+                            </div>
+                        @endif
                         <div class="row">
                             <div class="col-md-2">
                                 <label>{{ translate('Address')}}</label>

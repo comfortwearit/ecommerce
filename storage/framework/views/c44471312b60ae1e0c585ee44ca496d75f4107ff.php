@@ -11,6 +11,16 @@
                 <?php echo csrf_field(); ?>
                 <div class="modal-body">
                     <div class="p-3">
+                        <?php if(!Auth::check()): ?>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label><?php echo e(translate('Name')); ?></label>
+                                </div>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control mb-3" placeholder="<?php echo e(translate('Your Name')); ?>" name="name" value="" required>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                         <div class="row">
                             <div class="col-md-2">
                                 <label><?php echo e(translate('Address')); ?></label>

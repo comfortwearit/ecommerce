@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Address;
 use App\Models\City;
 use App\Models\State;
+use App\Models\User;
+//use App\User;
 use Auth;
 
 class AddressController extends Controller
@@ -48,7 +50,6 @@ class AddressController extends Controller
             $address->user_id  = $request->session()->get('temp_user_id'); //purchase without login
             $address->session_id  = $request->session()->get('temp_user_id');
         }
-
         $address->address       = $request->address;
         $address->country_id    = $request->country_id;
         $address->state_id      = $request->state_id;
@@ -58,7 +59,13 @@ class AddressController extends Controller
         $address->postal_code   = $request->postal_code;
         $address->phone         = $request->phone;
         $address->save();
-
+        $user = User::where('phone',$request->phone)->first();
+        if(!Auth::check() && $user == null){
+            $user = new User;
+            $user->name         = $request->name;
+            $user->phone         = $request->phone;
+            $user->save();
+        }
         return back();
     }
 

@@ -39,6 +39,7 @@ class CheckoutController extends Controller
             $request->session()->put('payment_type', 'cart_payment');
             
             $data['combined_order_id'] = $request->session()->get('combined_order_id');
+           // dd($data['combined_order_id']);
             $request->session()->put('payment_data', $data);
 
             if ($request->session()->get('combined_order_id') != null) {
@@ -170,35 +171,45 @@ class CheckoutController extends Controller
     {
         if(Auth::check()){
             $carts = Cart::where('user_id', Auth::user()->id)->get();
+            if ($carts && count($carts) > 0) {
+                $categories = Category::all();
+                return view('frontend.shipping_info', compact('categories', 'carts'));
+            }
+            flash(translate('Your cart is empty'))->success();
+            return back();
         }else{
             $temp_user_id = $request->session()->get('temp_user_id');// purchase without login
             $carts = ($temp_user_id != null) ? Cart::where('temp_user_id', $temp_user_id)->get() : [] ;
             $session_id= Address::orderBy('id', 'DESC')->first();
             if($session_id){
                 $address= Address::where('session_id', $temp_user_id)->first();
+              // dd($addresses);
             }
-            
-            
-           // dd($addressess);
+            if ($carts && count($carts) > 0) {
+                $categories = Category::all();
+                return view('frontend.shipping_info', compact('categories', 'carts','address'));
+            }
+            flash(translate('Your cart is empty'))->success();
+            return back();
+               //dd($address);
         }
        // if (Session::has('cart') && count(Session::get('cart')) > 0) {}
-        if ($carts && count($carts) > 0) {
-            $categories = Category::all();
-            return view('frontend.shipping_info', compact('categories', 'carts','address'));
-        }
-        flash(translate('Your cart is empty'))->success();
-        return back();
+        
     }
 
     public function store_shipping_info(Request $request)
     {
+       
         if ($request->address_id == null) {
             flash(translate("Please add shipping address"))->warning();
             return back();
         }
-
-        $carts = Cart::where('user_id', Auth::user()->id)->get();
-
+        if(Auth::check()){
+            $carts = Cart::where('user_id', Auth::user()->id)->get();
+        }else{
+            $temp_user_id = $request->session()->get('temp_user_id');// purchase without login
+            $carts = ($temp_user_id != null) ? Cart::where('temp_user_id', $temp_user_id)->get() : [] ;
+        }
         foreach ($carts as $key => $cartItem) {
             $cartItem->address_id = $request->address_id;
             $cartItem->save();
@@ -210,8 +221,14 @@ class CheckoutController extends Controller
 
     public function store_delivery_info(Request $request)
     {
-        $carts = Cart::where('user_id', Auth::user()->id)
-                ->get();
+        if(Auth::check()){
+            $carts = Cart::where('user_id', Auth::user()->id)
+            ->get();
+        }else{
+            $temp_user_id = $request->session()->get('temp_user_id');// purchase without login
+            $carts = ($temp_user_id != null) ? Cart::where('temp_user_id', $temp_user_id)->get() : [] ;
+        }
+       //dd($carts);
 
         if($carts->isEmpty()) {
             flash(translate('Your cart is empty'))->warning();
@@ -401,15 +418,17 @@ class CheckoutController extends Controller
     public function order_confirmed()
     {
         $combined_order = CombinedOrder::findOrFail(Session::get('combined_order_id'));
+        //dd($combined_order);
 
-        Cart::where('user_id', $combined_order->user_id)
-                ->delete();
+        Cart::where('user_id', $combined_order->user_id)->delete();
 
         //Session::forget('club_point');
         //Session::forget('combined_order_id');
         
-        foreach($combined_order->orders as $order){
-            NotificationUtility::sendOrderPlacedNotification($order);
+        if(Auth::check()){
+            foreach($combined_order->orders as $order){
+                NotificationUtility::sendOrderPlacedNotification($order);
+            }
         }
 
         return view('frontend.order_confirmed', compact('combined_order'));

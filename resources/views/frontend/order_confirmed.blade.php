@@ -51,7 +51,9 @@
                     <div class="text-center py-4 mb-4">
                         <i class="la la-check-circle la-3x text-success mb-3"></i>
                         <h1 class="h3 mb-3 fw-600">{{ translate('Thank You for Your Order!')}}</h1>
+                        @if(auth::check())
                         <p class="opacity-70 font-italic">{{  translate('A copy or your order summary has been sent to') }} {{ json_decode($first_order->shipping_address)->email }}</p>
+                        @endif
                     </div>
                     <div class="mb-4 bg-white p-4 rounded shadow-sm">
                         <h5 class="fw-600 mb-3 fs-17 pb-2">{{ translate('Order Summary')}}</h5>
@@ -67,7 +69,11 @@
                                         <td>{{ json_decode($first_order->shipping_address)->name }}</td>
                                     </tr>
                                     <tr>
+                                        @if(auth::check())
                                         <td class="w-50 fw-600">{{ translate('Email')}}:</td>
+                                        @else
+                                        <td class="w-50 fw-600">{{ translate('Phone')}}:</td>
+                                        @endif
                                         <td>{{ json_decode($first_order->shipping_address)->email }}</td>
                                     </tr>
                                     <tr>

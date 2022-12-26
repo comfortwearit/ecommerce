@@ -286,8 +286,12 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $carts = Cart::where('user_id', Auth::user()->id)
-            ->get();
+        if(Auth::check()){
+            $carts = Cart::where('user_id', Auth::user()->id)->get();
+        }else{
+            $temp_user_id = $request->session()->get('temp_user_id');// purchase without login
+            $carts = ($temp_user_id != null) ? Cart::where('temp_user_id', $temp_user_id)->get() : [] ;
+        }
 
         if ($carts->isEmpty()) {
             flash(translate('Your cart is empty'))->warning();
@@ -295,11 +299,13 @@ class OrderController extends Controller
         }
 
         $address = Address::where('id', $carts[0]['address_id'])->first();
+        $user = User::where('phone',$address->phone)->first();
+        //dd($user);
 
         $shippingAddress = [];
         if ($address != null) {
-            $shippingAddress['name']        = Auth::user()->name;
-            $shippingAddress['email']       = Auth::user()->email;
+            $shippingAddress['name']        = Auth::check()?Auth::user()->name : $user->name; 
+            $shippingAddress['email']       = Auth::check()?Auth::user()->email : $user->phone;
             $shippingAddress['address']     = $address->address;
             $shippingAddress['country']     = $address->country->name;
             $shippingAddress['state']       = $address->state->name;
@@ -312,7 +318,12 @@ class OrderController extends Controller
         }
 
         $combined_order = new CombinedOrder;
-        $combined_order->user_id = Auth::user()->id;
+        if(Auth::check()){
+          $combined_order->user_id = Auth::user()->id;   
+        }
+        // else{
+        //   $combined_order->user_id = $user->id;
+        // }
         $combined_order->shipping_address = json_encode($shippingAddress);
         $combined_order->save();
 
@@ -330,7 +341,12 @@ class OrderController extends Controller
         foreach ($seller_products as $seller_product) {
             $order = new Order;
             $order->combined_order_id = $combined_order->id;
-            $order->user_id = Auth::user()->id;
+            if(Auth::check()){
+                $order->user_id = Auth::user()->id;
+            }
+            // else{
+            //     $order->user_id = $user->id;
+            // }
             $order->shipping_address = $combined_order->shipping_address;
             $order->shipping_type = $carts[0]['shipping_type'];
             if ($carts[0]['shipping_type'] == 'pickup_point') {
@@ -416,7 +432,12 @@ class OrderController extends Controller
                 $order->grand_total -= $coupon_discount;
 
                 $coupon_usage = new CouponUsage;
-                $coupon_usage->user_id = Auth::user()->id;
+                if(Auth::check()){
+                    $coupon_usage->user_id = Auth::user()->id;
+                }
+                // else{
+                //     $coupon_usage->user_id = $user->id;
+                // }
                 $coupon_usage->coupon_id = Coupon::where('code', $seller_product[0]->coupon_code)->first()->id;
                 $coupon_usage->save();
             }
