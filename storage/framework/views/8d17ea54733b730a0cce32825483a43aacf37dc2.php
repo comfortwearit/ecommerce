@@ -73,7 +73,7 @@
             <div class="col text-center text-md-left">
                 <address>
                     <strong class="text-main"><?php echo e(json_decode($order->shipping_address)->name); ?></strong><br>
-                    <?php echo e(json_decode($order->shipping_address)->email); ?><br>
+                   <?php if(Auth::check()): ?> <?php echo e(json_decode($order->shipping_address)->email); ?><br><?php endif; ?>
                     <?php echo e(json_decode($order->shipping_address)->phone); ?><br>
                     <?php echo e(json_decode($order->shipping_address)->address); ?>, <?php echo e(json_decode($order->shipping_address)->city); ?>, <?php echo e(json_decode($order->shipping_address)->postal_code); ?><br>
                     <?php echo e(json_decode($order->shipping_address)->country); ?>

@@ -158,6 +158,7 @@
                 url: url,
                 type: 'GET',
                 success: function (response) {
+                    console.log(response.data.user)
                     $('#edit_modal_body').html(response.html);
                     $('#edit-address-modal').modal('show');
                     AIZ.plugins.bootstrapSelect('refresh');

@@ -91,6 +91,7 @@ class AddressController extends Controller
         $data['address_data'] = Address::findOrFail($id);
         $data['states'] = State::where('status', 1)->where('country_id', $data['address_data']->country_id)->get();
         $data['cities'] = City::where('status', 1)->where('state_id', $data['address_data']->state_id)->get();
+        $data['user'] = User::where('phone', $data['address_data']->phone)->first();
         
         $returnHTML = view('frontend.partials.address_edit_modal', $data)->render();
         return response()->json(array('data' => $data, 'html'=>$returnHTML));
@@ -107,6 +108,15 @@ class AddressController extends Controller
     public function update(Request $request, $id)
     {
         $address = Address::findOrFail($id);
+        //$phone= number_format($request->phone);
+        if(!Auth::check() ){
+            $userInfo = User::where('phone',$address->phone)->first();
+            $userId= $userInfo->id;
+            $user = User::findOrFail($userId);
+            $user->name         = $request->name;
+            $user->phone         = $request->phone;
+            $user->save();
+        }
         
         $address->address       = $request->address;
         $address->country_id    = $request->country_id;
@@ -118,6 +128,7 @@ class AddressController extends Controller
         $address->phone         = $request->phone;
 
         $address->save();
+       
 
         flash(translate('Address info updated successfully'))->success();
         return back();

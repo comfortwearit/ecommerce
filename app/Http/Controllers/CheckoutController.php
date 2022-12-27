@@ -418,10 +418,13 @@ class CheckoutController extends Controller
     public function order_confirmed()
     {
         $combined_order = CombinedOrder::findOrFail(Session::get('combined_order_id'));
-        //dd($combined_order);
-
+        //dd($carts);
+        if(Auth::check()){
         Cart::where('user_id', $combined_order->user_id)->delete();
-
+        }else{
+           
+            Cart::where('temp_user_id', $combined_order->temp_user_id)->delete();
+        }
         //Session::forget('club_point');
         //Session::forget('combined_order_id');
         

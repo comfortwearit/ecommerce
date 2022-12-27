@@ -1,6 +1,16 @@
 <form class="form-default" role="form" action="<?php echo e(route('addresses.update', $address_data->id)); ?>" method="POST">
     <?php echo csrf_field(); ?>
     <div class="p-3">
+        <?php if(!Auth::check() && isset($user)): ?>
+        <div class="row">
+            <div class="col-md-2">
+                <label><?php echo e(translate('Name')); ?></label>
+            </div>
+            <div class="col-md-10">
+                <input type="text" class="form-control mb-3" placeholder="<?php echo e(translate('Your Postal Code')); ?>" value="<?php echo e($user->name); ?>" name="name" value="" required>
+            </div>
+        </div>
+        <?php endif; ?>
         <div class="row">
             <div class="col-md-2">
                 <label><?php echo e(translate('Address')); ?></label>

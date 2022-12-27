@@ -101,6 +101,7 @@ class OrderController extends Controller
     public function all_orders_show($id)
     {
         $order = Order::findOrFail(decrypt($id));
+       // dd($order);
         $order_shipping_address = json_decode($order->shipping_address);
         $delivery_boys = User::where('city', $order_shipping_address->city)
             ->where('user_type', 'delivery_boy')
@@ -305,7 +306,7 @@ class OrderController extends Controller
         $shippingAddress = [];
         if ($address != null) {
             $shippingAddress['name']        = Auth::check()?Auth::user()->name : $user->name; 
-            $shippingAddress['email']       = Auth::check()?Auth::user()->email : $user->phone;
+            $shippingAddress['email']       = Auth::check()?Auth::user()->email : ' ';
             $shippingAddress['address']     = $address->address;
             $shippingAddress['country']     = $address->country->name;
             $shippingAddress['state']       = $address->state->name;
@@ -321,9 +322,10 @@ class OrderController extends Controller
         if(Auth::check()){
           $combined_order->user_id = Auth::user()->id;   
         }
-        // else{
-        //   $combined_order->user_id = $user->id;
-        // }
+        else{
+          $temp_user_id = $request->session()->get('temp_user_id');
+          $combined_order->temp_user_id = $temp_user_id;
+        }
         $combined_order->shipping_address = json_encode($shippingAddress);
         $combined_order->save();
 
@@ -344,9 +346,9 @@ class OrderController extends Controller
             if(Auth::check()){
                 $order->user_id = Auth::user()->id;
             }
-            // else{
-            //     $order->user_id = $user->id;
-            // }
+            else{
+                $order->user_id = $user->id;
+            }
             $order->shipping_address = $combined_order->shipping_address;
             $order->shipping_type = $carts[0]['shipping_type'];
             if ($carts[0]['shipping_type'] == 'pickup_point') {

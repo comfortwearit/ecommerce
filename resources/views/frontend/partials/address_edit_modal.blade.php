@@ -1,6 +1,16 @@
 <form class="form-default" role="form" action="{{ route('addresses.update', $address_data->id) }}" method="POST">
     @csrf
     <div class="p-3">
+        @if(!Auth::check() && isset($user))
+        <div class="row">
+            <div class="col-md-2">
+                <label>{{ translate('Name')}}</label>
+            </div>
+            <div class="col-md-10">
+                <input type="text" class="form-control mb-3" placeholder="{{ translate('Your Postal Code')}}" value="{{ $user->name }}" name="name" value="" required>
+            </div>
+        </div>
+        @endif
         <div class="row">
             <div class="col-md-2">
                 <label>{{ translate('Address')}}</label>
