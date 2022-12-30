@@ -25,14 +25,14 @@
                             }
                         ?>
                         <a href="javascript:void(0)" class="dropdown-toggle text-reset py-2" data-toggle="dropdown" data-display="static">
-                            <img src="<?php echo e(static_asset('assets/img/placeholder.jpg')); ?>" data-src="<?php echo e(static_asset('assets/img/flags/'.$locale.'.png')); ?>" class="mr-2 lazyload" alt="<?php echo e(\App\Models\Language::where('code', $locale)->first()->name); ?>" height="11">
+                            <img src="<?php echo e(asset('assets/img/placeholder.jpg')); ?>" data-src="<?php echo e(asset('assets/img/flags/'.$locale.'.png')); ?>" class="mr-2 lazyload" alt="<?php echo e(\App\Models\Language::where('code', $locale)->first()->name); ?>" height="11">
                             <span class="opacity-60"><?php echo e(\App\Models\Language::where('code', $locale)->first()->name); ?></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-left">
                             <?php $__currentLoopData = \App\Models\Language::all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $language): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <li>
                                     <a href="javascript:void(0)" data-flag="<?php echo e($language->code); ?>" class="dropdown-item <?php if($locale == $language): ?> active <?php endif; ?>">
-                                        <img src="<?php echo e(static_asset('assets/img/placeholder.jpg')); ?>" data-src="<?php echo e(static_asset('assets/img/flags/'.$language->code.'.png')); ?>" class="mr-1 lazyload" alt="<?php echo e($language->name); ?>" height="11">
+                                        <img src="<?php echo e(asset('assets/img/placeholder.jpg')); ?>" data-src="<?php echo e(asset('assets/img/flags/'.$language->code.'.png')); ?>" class="mr-1 lazyload" alt="<?php echo e($language->name); ?>" height="11">
                                         <span class="language"><?php echo e($language->name); ?></span>
                                     </a>
                                 </li>
@@ -184,7 +184,7 @@
                         <?php if($header_logo != null): ?>
                             <img src="<?php echo e(uploaded_asset($header_logo)); ?>" alt="<?php echo e(env('APP_NAME')); ?>" class="mw-100 h-30px h-md-40px" height="40">
                         <?php else: ?>
-                            <img src="<?php echo e(static_asset('assets/img/logo.png')); ?>" alt="<?php echo e(env('APP_NAME')); ?>" class="mw-100 h-30px h-md-40px" height="40">
+                            <img src="<?php echo e(asset('assets/img/logo.png')); ?>" alt="<?php echo e(env('APP_NAME')); ?>" class="mw-100 h-30px h-md-40px" height="40">
                         <?php endif; ?>
                     </a>
 

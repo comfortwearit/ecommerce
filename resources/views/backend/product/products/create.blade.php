@@ -8,7 +8,7 @@
     <form class="form form-horizontal mar-top" action="{{route('products.store')}}" method="POST" enctype="multipart/form-data" id="choice_form">
         <div class="row gutters-5">
             <div class="col-lg-8">
-                @csrf
+                @csrf 
                 <input type="hidden" name="added_by" value="admin">
                 <div class="card">
                     <div class="card-header">

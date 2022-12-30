@@ -182,9 +182,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endif
+                                @endif 
 
-                                {{-- <button type="submit" class="btn btn-styled btn-block btn-base-4">Apply filter</button> --}}
+                                {{-- <button type="submit" class="btn btn-styled btn-block btn-base-4">Apply filter</button>--}}
                             </div>
                         </div>
                     </div>
@@ -253,7 +253,7 @@
                         </div>
                         <input type="hidden" name="min_price" value="">
                         <input type="hidden" name="max_price" value="">
-                        <div class="row gutters-5 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2">
+                        <div class="row gutters-5 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-4 row-cols-4">
                             @foreach ($products as $key => $product)
                                 <div class="col">
                                     @include('frontend.partials.product_box_1',['product' => $product])

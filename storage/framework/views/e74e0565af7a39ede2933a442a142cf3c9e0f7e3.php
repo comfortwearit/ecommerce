@@ -109,7 +109,7 @@
                 <div class="align-items-stretch d-flex dropdown " id="lang-change">
                     <a class="dropdown-toggle no-arrow" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false">
                         <span class="btn btn-icon">
-                            <img src="<?php echo e(static_asset('assets/img/flags/'.$locale.'.png')); ?>" height="11">
+                            <img src="<?php echo e(asset('assets/img/flags/'.$locale.'.png')); ?>" height="11">
                         </span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-menu-xs">
@@ -117,7 +117,7 @@
                         <?php $__currentLoopData = \App\Models\Language::all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $language): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <li>
                                 <a href="javascript:void(0)" data-flag="<?php echo e($language->code); ?>" class="dropdown-item <?php if($locale == $language->code): ?> active <?php endif; ?>">
-                                    <img src="<?php echo e(static_asset('assets/img/flags/'.$language->code.'.png')); ?>" class="mr-2">
+                                    <img src="<?php echo e(asset('assets/img/flags/'.$language->code.'.png')); ?>" class="mr-2">
                                     <span class="language"><?php echo e($language->name); ?></span>
                                 </a>
                             </li>
@@ -133,8 +133,9 @@
                             <span class="avatar avatar-sm mr-md-2">
                                 <img
                                     src="<?php echo e(uploaded_asset(Auth::user()->avatar_original)); ?>"
-                                    onerror="this.onerror=null;this.src='<?php echo e(static_asset('assets/img/avatar-place.png')); ?>';"
+                                    onerror="this.onerror=null;this.src='<?php echo e(asset('assets/img/avatar-place.png')); ?>';"
                                 >
+                                
                             </span>
                             <span class="d-none d-md-block">
                                 <span class="d-block fw-500"><?php echo e(Auth::user()->name); ?></span>

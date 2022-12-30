@@ -9,7 +9,7 @@
 @section('meta')
     <!-- Schema.org markup for Google+ -->
     <meta itemprop="name" content="{{ $detailedProduct->meta_title }}">
-    <meta itemprop="description" content="{{ $detailedProduct->meta_description }}">
+    <meta itemprop="description" content="{{ $detailedProduct->meta_description }}"> 
     <meta itemprop="image" content="{{ uploaded_asset($detailedProduct->meta_img) }}">
 
     <!-- Twitter Card data -->

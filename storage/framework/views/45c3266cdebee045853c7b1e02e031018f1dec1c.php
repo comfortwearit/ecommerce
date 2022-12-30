@@ -11,11 +11,11 @@
                 <a href="<?php echo e(route('products.category', $category->slug)); ?>" class="text-truncate text-reset py-2 px-3 d-block">
                     <img
                         class="cat-image lazyload mr-2 opacity-60"
-                        src="<?php echo e(static_asset('assets/img/placeholder.jpg')); ?>"
+                        src="<?php echo e(asset('assets/img/placeholder.jpg')); ?>"
                         data-src="<?php echo e(uploaded_asset($category->icon)); ?>"
                         width="16"
                         alt="<?php echo e($category->getTranslation('name')); ?>"
-                        onerror="this.onerror=null;this.src='<?php echo e(static_asset('assets/img/placeholder.jpg')); ?>';"
+                        onerror="this.onerror=null;this.src='<?php echo e(asset('assets/img/placeholder.jpg')); ?>';"
                     >
                     <span class="cat-name"><?php echo e($category->getTranslation('name')); ?></span>
                 </a>

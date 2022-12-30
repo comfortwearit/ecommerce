@@ -1,0 +1,333 @@
+
+
+<?php $__env->startSection('content'); ?>
+<div class="aiz-titlebar text-left mt-2 mb-3">
+    <h5 class="mb-0 h6"><?php echo e(translate('Role Information')); ?></h5>
+</div>
+
+
+<div class="col-lg-7 mx-auto">
+    <div class="card">
+        <div class="card-body p-0">
+            <ul class="nav nav-tabs nav-fill border-light">
+      				<?php $__currentLoopData = \App\Models\Language::all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $language): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+      					<li class="nav-item">
+      						<a class="nav-link text-reset <?php if($language->code == $lang): ?> active <?php else: ?> bg-soft-dark border-light border-left-0 <?php endif; ?> py-3" href="<?php echo e(route('roles.edit', ['id'=>$role->id, 'lang'=> $language->code] )); ?>">
+      							<img src="<?php echo e(static_asset('assets/img/flags/'.$language->code.'.png')); ?>" height="11" class="mr-1">
+      							<span><?php echo e($language->name); ?></span>
+      						</a>
+      					</li>
+    	            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+      			</ul>
+            <form class="p-4" action="<?php echo e(route('roles.update', $role->id)); ?>" method="POST">
+                <input name="_method" type="hidden" value="PATCH">
+                <input type="hidden" name="lang" value="<?php echo e($lang); ?>">
+            	   <?php echo csrf_field(); ?>
+                <div class="form-group row">
+                    <label class="col-md-3 col-from-label" for="name"><?php echo e(translate('Name')); ?> <i class="las la-language text-danger" title="<?php echo e(translate('Translatable')); ?>"></i></label>
+                    <div class="col-md-9">
+                        <input type="text" placeholder="<?php echo e(translate('Name')); ?>" id="name" name="name" class="form-control" value="<?php echo e($role->getTranslation('name', $lang)); ?>" required>
+                    </div>
+                </div>
+                <div class="card-header">
+                    <h5 class="mb-0 h6"><?php echo e(translate('Permissions')); ?></h5>
+                </div>
+                <br>
+                <?php
+                    $permissions = json_decode($role->permissions);
+                ?>
+                <div class="form-group row">
+                    <label class="col-md-2 col-from-label" for="banner"></label>
+                    <div class="col-md-8">
+                        <?php if(addon_is_activated('pos_system')): ?>
+                          <div class="row">
+                              <div class="col-md-10">
+                                  <label class="col-from-label"><?php echo e(translate('POS System')); ?></label>
+                              </div>
+                              <div class="col-md-2">
+                                  <label class="aiz-switch aiz-switch-success mb-0">
+                                      <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="1" <?php if(in_array(1, $permissions)) echo "checked"; ?>>
+                                      <span class="slider round"></span>
+                                  </label>
+                              </div>
+                          </div>
+                        <?php endif; ?>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Products')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="2" <?php if(in_array(2, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('All Orders')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="3" <?php if(in_array(3, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Inhouse orders')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="4" <?php if(in_array(4, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Seller Orders')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="5" <?php if(in_array(5, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Pick-up Point Order')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="6" <?php if(in_array(6, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <?php if(addon_is_activated('refund_request')): ?>
+                          <div class="row">
+                              <div class="col-md-10">
+                                  <label class="col-from-label"><?php echo e(translate('Refunds')); ?></label>
+                              </div>
+                              <div class="col-md-2">
+                                  <label class="aiz-switch aiz-switch-success mb-0">
+                                      <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="7" <?php if(in_array(7, $permissions)) echo "checked"; ?>>
+                                      <span class="slider round"></span>
+                                  </label>
+                              </div>
+                          </div>
+                        <?php endif; ?>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Customers')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="8" <?php if(in_array(8, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Sellers')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="9" <?php if(in_array(9, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Reports')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="10" <?php if(in_array(10, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Marketing')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="11" <?php if(in_array(11, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Support')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="12" <?php if(in_array(12, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Website Setup')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="13" <?php if(in_array(13, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Setup & Configurations')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="14" <?php if(in_array(14, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <?php if(addon_is_activated('affiliate_system')): ?>
+                          <div class="row">
+                              <div class="col-md-10">
+                                  <label class="col-from-label"><?php echo e(translate('Affiliate System')); ?></label>
+                              </div>
+                              <div class="col-md-2">
+                                  <label class="aiz-switch aiz-switch-success mb-0">
+                                      <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="15" <?php if(in_array(15, $permissions)) echo "checked"; ?>>
+                                      <span class="slider round"></span>
+                                  </label>
+                              </div>
+                          </div>
+                        <?php endif; ?>
+                        <?php if(addon_is_activated('offline_payment')): ?>
+                          <div class="row">
+                              <div class="col-md-10">
+                                  <label class="col-from-label"><?php echo e(translate('Offline Payment System')); ?></label>
+                              </div>
+                              <div class="col-md-2">
+                                  <label class="aiz-switch aiz-switch-success mb-0">
+                                      <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="16" <?php if(in_array(16, $permissions)) echo "checked"; ?>>
+                                      <span class="slider round"></span>
+                                  </label>
+                              </div>
+                          </div>
+                        <?php endif; ?>
+                        <?php if(addon_is_activated('paytm')): ?>
+                          <div class="row">
+                              <div class="col-md-10">
+                                  <label class="col-from-label"><?php echo e(translate('Paytm Payment Gateway')); ?></label>
+                              </div>
+                              <div class="col-md-2">
+                                  <label class="aiz-switch aiz-switch-success mb-0">
+                                      <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="17" <?php if(in_array(17, $permissions)) echo "checked"; ?>>
+                                      <span class="slider round"></span>
+                                  </label>
+                              </div>
+                          </div>
+                        <?php endif; ?>
+                        <?php if(addon_is_activated('club_point')): ?>
+                          <div class="row">
+                              <div class="col-md-10">
+                                  <label class="col-from-label"><?php echo e(translate('Club Point System')); ?></label>
+                              </div>
+                              <div class="col-md-2">
+                                  <label class="aiz-switch aiz-switch-success mb-0">
+                                      <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="18" <?php if(in_array(18, $permissions)) echo "checked"; ?>>
+                                      <span class="slider round"></span>
+                                  </label>
+                              </div>
+                          </div>
+                        <?php endif; ?>
+                        <?php if(addon_is_activated('otp_system')): ?>
+                          <div class="row">
+                              <div class="col-md-10">
+                                  <label class="col-from-label"><?php echo e(translate('OTP System')); ?></label>
+                              </div>
+                              <div class="col-md-2">
+                                  <label class="aiz-switch aiz-switch-success mb-0">
+                                      <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="19" <?php if(in_array(19, $permissions)) echo "checked"; ?>>
+                                      <span class="slider round"></span>
+                                  </label>
+                              </div>
+                          </div>
+                        <?php endif; ?>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Staffs')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="20" <?php if(in_array(20, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Addon Manager')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="21" <?php if(in_array(21, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Uploaded Files')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="22" <?php if(in_array(22, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('Blog System')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="23" <?php if(in_array(23, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label class="col-from-label"><?php echo e(translate('System')); ?></label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="24" <?php if(in_array(21, $permissions)) echo "checked"; ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mb-0 text-right">
+                    <button type="submit" class="btn btn-sm btn-primary"><?php echo e(translate('Save')); ?></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('backend.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\My Work\Website\public_html\resources\views/backend/staff/staff_roles/edit.blade.php ENDPATH**/ ?>

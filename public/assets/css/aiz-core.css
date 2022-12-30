@@ -6083,9 +6083,13 @@ div.footable-loader > span.fooicon:after {
 .aiz-carousel.gutters-10 {
     width: calc(100% + 20px);
 }
-.aiz-carousel.gutters-10 .carousel-box {
+/* .aiz-carousel.gutters-10 .carousel-box {
     padding-left: 10px;
     padding-right: 10px;
+} */
+.aiz-carousel.gutters-10 .carousel-box {
+    padding-left: 3px;
+    padding-right: 3px;
 }
 .aiz-carousel.gutters-15 {
     width: calc(100% + 30px);

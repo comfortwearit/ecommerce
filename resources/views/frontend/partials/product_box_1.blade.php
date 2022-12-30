@@ -1,15 +1,22 @@
 <div class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white">
     @if(discount_in_percentage($product) > 0)
-        <span class="badge-custom">{{ translate('OFF') }}<span class="box ml-1 mr-0">&nbsp;{{discount_in_percentage($product)}}%</span></span>
+        <span class="badge-custom d-none d-md-block">{{ translate('OFF') }}<span class="box ml-1 mr-0">&nbsp;{{discount_in_percentage($product)}}%</span></span>
     @endif
     <div class="position-relative">
         <a href="{{ route('product', $product->slug) }}" class="d-block">
-            <img
+            {{-- <img
                 class="img-fit lazyload mx-auto h-140px h-md-210px"
-                src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                src="{{ asset('assets/img/placeholder.jpg') }}"
                 data-src="{{ uploaded_asset($product->thumbnail_img) }}"
                 alt="{{  $product->getTranslation('name')  }}"
-                onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
+                onerror="this.onerror=null;this.src='{{ asset('assets/img/placeholder.jpg') }}';"
+            > --}}
+            <img
+            class="img-fit lazyload mx-auto h-70px h-sm-100px h-md-140px h-lg-210px"
+            src="{{ asset('assets/img/placeholder.jpg') }}"
+            data-src="{{ uploaded_asset($product->thumbnail_img) }}"
+            alt="{{  $product->getTranslation('name')  }}"
+            onerror="this.onerror=null;this.src='{{ asset('assets/img/placeholder.jpg') }}';"
             >
         </a>
         @if ($product->wholesale_product)
@@ -36,10 +43,10 @@
             @endif
             <span class="fw-700 text-primary">{{ home_discounted_base_price($product) }}</span>
         </div>
-        <div class="rating rating-sm mt-1">
+        <div class="rating rating-sm mt-1 d-none d-sm-block">
             {{ renderStarRating($product->rating) }}
         </div>
-        <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px">
+        <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px d-none d-lg-block">
             <a href="{{ route('product', $product->slug) }}" class="d-block text-reset">{{  $product->getTranslation('name')  }}</a>
         </h3>
         @if (addon_is_activated('club_point'))

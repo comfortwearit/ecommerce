@@ -36,9 +36,9 @@
                 <div class="mt-4">
                     <a href="<?php echo e(route('home')); ?>" class="d-block">
                         <?php if(get_setting('footer_logo') != null): ?>
-                            <img class="lazyload" src="<?php echo e(static_asset('assets/img/placeholder-rect.jpg')); ?>" data-src="<?php echo e(uploaded_asset(get_setting('footer_logo'))); ?>" alt="<?php echo e(env('APP_NAME')); ?>" height="44">
+                            <img class="lazyload" src="<?php echo e(asset('assets/img/placeholder-rect.jpg')); ?>" data-src="<?php echo e(uploaded_asset(get_setting('footer_logo'))); ?>" alt="<?php echo e(env('APP_NAME')); ?>" height="44">
                         <?php else: ?>
-                            <img class="lazyload" src="<?php echo e(static_asset('assets/img/placeholder-rect.jpg')); ?>" data-src="<?php echo e(static_asset('assets/img/logo.png')); ?>" alt="<?php echo e(env('APP_NAME')); ?>" height="44">
+                            <img class="lazyload" src="<?php echo e(asset('assets/img/placeholder-rect.jpg')); ?>" data-src="<?php echo e(asset('assets/img/logo.png')); ?>" alt="<?php echo e(env('APP_NAME')); ?>" height="44">
                         <?php endif; ?>
                     </a>
                     <div class="my-3">
@@ -60,12 +60,12 @@
                     <div class="w-300px mw-100 mx-auto mx-md-0">
                         <?php if(get_setting('play_store_link') != null): ?>
                             <a href="<?php echo e(get_setting('play_store_link')); ?>" target="_blank" class="d-inline-block mr-3 ml-0">
-                                <img src="<?php echo e(static_asset('assets/img/play.png')); ?>" class="mx-100 h-40px">
+                                <img src="<?php echo e(asset('assets/img/play.png')); ?>" class="mx-100 h-40px">
                             </a>
                         <?php endif; ?>
                         <?php if(get_setting('app_store_link') != null): ?>
                             <a href="<?php echo e(get_setting('app_store_link')); ?>" target="_blank" class="d-inline-block">
-                                <img src="<?php echo e(static_asset('assets/img/app.png')); ?>" class="mx-100 h-40px">
+                                <img src="<?php echo e(asset('assets/img/app.png')); ?>" class="mx-100 h-40px">
                             </a>
                         <?php endif; ?>
                     </div>
@@ -298,7 +298,7 @@
                         <?php if(Auth::user()->photo != null): ?>
                             <img src="<?php echo e(custom_asset(Auth::user()->avatar_original)); ?>" class="rounded-circle size-20px">
                         <?php else: ?>
-                            <img src="<?php echo e(static_asset('assets/img/avatar-place.png')); ?>" class="rounded-circle size-20px">
+                            <img src="<?php echo e(asset('assets/img/avatar-place.png')); ?>" class="rounded-circle size-20px">
                         <?php endif; ?>
                     </span>
                     <span class="d-block fs-10 fw-600 opacity-60"><?php echo e(translate('Account')); ?></span>
@@ -309,7 +309,7 @@
                         <?php if(Auth::user()->photo != null): ?>
                             <img src="<?php echo e(custom_asset(Auth::user()->avatar_original)); ?>" class="rounded-circle size-20px">
                         <?php else: ?>
-                            <img src="<?php echo e(static_asset('assets/img/avatar-place.png')); ?>" class="rounded-circle size-20px">
+                            <img src="<?php echo e(asset('assets/img/avatar-place.png')); ?>" class="rounded-circle size-20px">
                         <?php endif; ?>
                     </span>
                     <span class="d-block fs-10 fw-600 opacity-60"><?php echo e(translate('Account')); ?></span>
@@ -318,7 +318,7 @@
         <?php else: ?>
             <a href="<?php echo e(route('user.login')); ?>" class="text-reset d-block text-center pb-2 pt-3">
                 <span class="d-block mx-auto">
-                    <img src="<?php echo e(static_asset('assets/img/avatar-place.png')); ?>" class="rounded-circle size-20px">
+                    <img src="<?php echo e(asset('assets/img/avatar-place.png')); ?>" class="rounded-circle size-20px">
                 </span>
                 <span class="d-block fs-10 fw-600 opacity-60"><?php echo e(translate('Account')); ?></span>
             </a>

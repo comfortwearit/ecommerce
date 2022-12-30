@@ -1,15 +1,16 @@
 <div class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white">
     <?php if(discount_in_percentage($product) > 0): ?>
-        <span class="badge-custom"><?php echo e(translate('OFF')); ?><span class="box ml-1 mr-0">&nbsp;<?php echo e(discount_in_percentage($product)); ?>%</span></span>
+        <span class="badge-custom d-none d-md-block"><?php echo e(translate('OFF')); ?><span class="box ml-1 mr-0">&nbsp;<?php echo e(discount_in_percentage($product)); ?>%</span></span>
     <?php endif; ?>
     <div class="position-relative">
         <a href="<?php echo e(route('product', $product->slug)); ?>" class="d-block">
+            
             <img
-                class="img-fit lazyload mx-auto h-140px h-md-210px"
-                src="<?php echo e(static_asset('assets/img/placeholder.jpg')); ?>"
-                data-src="<?php echo e(uploaded_asset($product->thumbnail_img)); ?>"
-                alt="<?php echo e($product->getTranslation('name')); ?>"
-                onerror="this.onerror=null;this.src='<?php echo e(static_asset('assets/img/placeholder.jpg')); ?>';"
+            class="img-fit lazyload mx-auto h-70px h-sm-100px h-md-140px h-lg-210px"
+            src="<?php echo e(asset('assets/img/placeholder.jpg')); ?>"
+            data-src="<?php echo e(uploaded_asset($product->thumbnail_img)); ?>"
+            alt="<?php echo e($product->getTranslation('name')); ?>"
+            onerror="this.onerror=null;this.src='<?php echo e(asset('assets/img/placeholder.jpg')); ?>';"
             >
         </a>
         <?php if($product->wholesale_product): ?>
@@ -37,11 +38,11 @@
             <?php endif; ?>
             <span class="fw-700 text-primary"><?php echo e(home_discounted_base_price($product)); ?></span>
         </div>
-        <div class="rating rating-sm mt-1">
+        <div class="rating rating-sm mt-1 d-none d-sm-block">
             <?php echo e(renderStarRating($product->rating)); ?>
 
         </div>
-        <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px">
+        <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px d-none d-lg-block">
             <a href="<?php echo e(route('product', $product->slug)); ?>" class="d-block text-reset"><?php echo e($product->getTranslation('name')); ?></a>
         </h3>
         <?php if(addon_is_activated('club_point')): ?>

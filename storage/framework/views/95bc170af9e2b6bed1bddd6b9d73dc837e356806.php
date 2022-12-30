@@ -2,11 +2,9 @@
     <div class="aiz-sidebar left c-scrollbar">
         <div class="aiz-side-nav-logo-wrap">
             <a href="<?php echo e(route('admin.dashboard')); ?>" class="d-block text-left">
-                <?php if(get_setting('system_logo_white') != null): ?>
-                    <img class="mw-100" src="<?php echo e(uploaded_asset(get_setting('system_logo_white'))); ?>" class="brand-icon" alt="<?php echo e(get_setting('site_name')); ?>">
-                <?php else: ?>
-                    <img class="mw-100" src="<?php echo e(static_asset('assets/img/logo.png')); ?>" class="brand-icon" alt="<?php echo e(get_setting('site_name')); ?>">
-                <?php endif; ?>
+                
+                    <img class="mw-100" src="<?php echo e(asset('assets/img/logo.png')); ?>" class="brand-icon" alt="<?php echo e(get_setting('site_name')); ?>">
+                
             </a>
         </div>
         <div class="aiz-side-nav-wrap">
