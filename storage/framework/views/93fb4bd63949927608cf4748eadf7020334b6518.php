@@ -43,7 +43,12 @@
 
         </div>
         <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px d-none d-lg-block">
-            <a href="<?php echo e(route('product', $product->slug)); ?>" class="d-block text-reset"><?php echo e($product->getTranslation('name')); ?></a>
+            <a href="<?php echo e(route('product', $product->slug)); ?>" class="d-block text-reset"><?php echo e($product->getTranslation('name')); ?> 
+              <?php if(isset($product->product_code)): ?>
+              -<?php echo e($product->product_code); ?>
+
+              <?php endif; ?>
+            </a>
         </h3>
         <?php if(addon_is_activated('club_point')): ?>
             <div class="rounded px-2 mt-2 bg-soft-primary border-soft-primary border">

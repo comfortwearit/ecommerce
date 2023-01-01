@@ -160,6 +160,11 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $pro_id= Product::orderBy('id', 'DESC')->first();
+        $pro_name = substr($request->name,0,3);
+        $pro_code =intval($pro_id->id)+1;
+        $pro_main_code = strtoupper($pro_name).$pro_code;
+        //dd($pro_main_code);
         $product = new Product;
         $product->name = $request->name;
         $product->added_by = $request->added_by;
@@ -174,6 +179,12 @@ class ProductController extends Controller
         }
         $product->category_id = $request->category_id;
         $product->brand_id = $request->brand_id;
+        if (!preg_match('/[^A-Za-z0-9]/', $request->name)){
+            $product->product_code = $pro_main_code;
+        }else{
+            $product->product_code = "CMF".$pro_code;
+        }
+       
         $product->barcode = $request->barcode;
 
         if (addon_is_activated('refund_request')) {
@@ -508,10 +519,18 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $pro_name = substr($request->name,0,3);
+        $pro_main_code = strtoupper($pro_name).$id;
         $product                    = Product::findOrFail($id);
         $product->category_id       = $request->category_id;
         $product->brand_id          = $request->brand_id;
         $product->barcode           = $request->barcode;
+        //$product->product_code      = $pro_main_code;
+        if (preg_match('/[^A-Za-z0-9]/', $request->name)){
+            $product->product_code = $pro_main_code;
+        }else{
+            $product->product_code = "CMF".$id;
+        }
         $product->cash_on_delivery = 0;
         $product->featured = 0;
         $product->todays_deal = 0;

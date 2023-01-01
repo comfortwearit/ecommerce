@@ -47,7 +47,11 @@
             {{ renderStarRating($product->rating) }}
         </div>
         <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px d-none d-lg-block">
-            <a href="{{ route('product', $product->slug) }}" class="d-block text-reset">{{  $product->getTranslation('name')  }}</a>
+            <a href="{{ route('product', $product->slug) }}" class="d-block text-reset">{{  $product->getTranslation('name')  }} 
+              @if(isset($product->product_code))
+              -{{$product->product_code}}
+              @endif
+            </a>
         </h3>
         @if (addon_is_activated('club_point'))
             <div class="rounded px-2 mt-2 bg-soft-primary border-soft-primary border">
