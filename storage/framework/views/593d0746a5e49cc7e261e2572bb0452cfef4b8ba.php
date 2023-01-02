@@ -123,7 +123,12 @@
                                     <img src="<?php echo e(uploaded_asset($product->thumbnail_img)); ?>" alt="Image" class="size-50px img-fit">
                                 </div>
                                 <div class="col">
-                                    <span class="text-muted text-truncate-2"><?php echo e($product->getTranslation('name')); ?></span>
+                                    <span class="text-muted text-truncate-2"><?php echo e($product->getTranslation('name')); ?> 
+                                        <?php if(isset($product->product_code)): ?> 
+                                            -<?php echo e($product->product_code); ?>
+
+                                        <?php endif; ?>
+                                    </span>
                                 </div>
                             </div>
                         </td>
